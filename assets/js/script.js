@@ -31,56 +31,31 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Enhanced Mobile Performance Detection and Optimizations
+// Balanced Mobile Performance Detection and Optimizations
 function initMobileOptimizations() {
     const isMobile = window.innerWidth <= 768;
-    const isSlowDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    const isVerySlowDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
     const isSlowConnection = navigator.connection && 
         (navigator.connection.effectiveType === 'slow-2g' || 
-         navigator.connection.effectiveType === '2g' || 
-         navigator.connection.effectiveType === '3g');
+         navigator.connection.effectiveType === '2g');
     
-    if (isMobile || isSlowDevice || isSlowConnection) {
-        // Disable all heavy animations
+    if (isMobile || isVerySlowDevice || isSlowConnection) {
+        // Add mobile-optimized class
         document.body.classList.add('mobile-optimized');
         
-        // Remove starry background completely
-        const style = document.createElement('style');
-        style.textContent = `
-            .mobile-optimized body::before,
-            .mobile-optimized body::after {
-                display: none !important;
-            }
-            
-            .mobile-optimized * {
-                animation: none !important;
-                transition: none !important;
-                transform: none !important;
-                will-change: auto !important;
-            }
-            
-            .mobile-optimized .carousel {
-                animation: none !important;
-            }
-            
-            .mobile-optimized .hero-video,
-            .mobile-optimized .section-video {
-                display: none !important;
-            }
-        `;
-        document.head.appendChild(style);
+        // Only remove stars on very slow devices/connections
+        if (isVerySlowDevice || isSlowConnection) {
+            const style = document.createElement('style');
+            style.textContent = `
+                .mobile-optimized body::before,
+                .mobile-optimized body::after {
+                    display: none !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
         
-        // Disable intersection observer animations
-        const animatedElements = document.querySelectorAll('.use-case-card, .solution-card, .journey-card, .why-column');
-        animatedElements.forEach(el => {
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-        });
-        
-        // Disable parallax completely
-        window.removeEventListener('scroll', initParallaxEffect);
-        
-        // Replace videos with static backgrounds
+        // Keep videos disabled on mobile
         const heroVideo = document.querySelector('.hero-video');
         const sectionVideo = document.querySelector('.section-video');
         
@@ -103,7 +78,7 @@ function initVideoOptimization() {
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
-        // Completely disable videos on mobile
+        // Disable videos on mobile but keep fallback backgrounds
         const videos = document.querySelectorAll('video');
         videos.forEach(video => {
             video.style.display = 'none';
@@ -159,10 +134,36 @@ function initVideoOptimization() {
     });
 }
 
-// Optimized Parallax Effect (disabled on mobile)
+// Balanced Parallax Effect (very light on mobile)
 function initParallaxEffect() {
-    if (window.innerWidth <= 768) return; // Skip on mobile
+    if (window.innerWidth <= 768) {
+        // Very subtle parallax on mobile - just for hero section
+        const hero = document.querySelector('.hero');
+        let ticking = false;
+        
+        function updateMobileParallax() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.1; // Very minimal movement
+            
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+            
+            ticking = false;
+        }
+        
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateMobileParallax);
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', requestTick, { passive: true });
+        return;
+    }
     
+    // Full parallax for desktop
     const hero = document.querySelector('.hero');
     const heroVideo = document.querySelector('.hero-video');
     
@@ -170,7 +171,7 @@ function initParallaxEffect() {
     
     function updateParallax() {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.2; // Reduced intensity
+        const rate = scrolled * -0.2;
         
         if (hero) {
             hero.style.transform = `translateY(${rate}px)`;
@@ -319,28 +320,22 @@ function showFormMessage(message, type) {
     }, 5000);
 }
 
-// Optimized Scroll Animations (disabled on mobile)
+// Balanced Scroll Animations (simplified on mobile)
 function initScrollAnimations() {
-    if (window.innerWidth <= 768) {
-        // Show all elements immediately on mobile
-        const animatedElements = document.querySelectorAll('.use-case-card, .solution-card, .journey-card, .why-column');
-        animatedElements.forEach(el => {
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-        });
-        return;
-    }
+    const isMobile = window.innerWidth <= 768;
     
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: isMobile ? 0.05 : 0.1, // Lower threshold on mobile for faster trigger
+        rootMargin: isMobile ? '0px 0px -20px 0px' : '0px 0px -50px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                if (!isMobile) {
+                    entry.target.style.transform = 'translateY(0)';
+                }
             }
         });
     }, observerOptions);
@@ -349,8 +344,12 @@ function initScrollAnimations() {
     const animatedElements = document.querySelectorAll('.use-case-card, .solution-card, .journey-card, .why-column');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        if (!isMobile) {
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        } else {
+            el.style.transition = 'opacity 0.4s ease'; // Faster on mobile
+        }
         observer.observe(el);
     });
 }

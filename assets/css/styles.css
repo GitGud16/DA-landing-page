@@ -1066,30 +1066,46 @@ h1, h2, h3, h4, h5, h6 {
 
 /* COMPREHENSIVE MOBILE PERFORMANCE OPTIMIZATIONS */
 @media (max-width: 768px) {
-    /* CRITICAL: Disable all heavy animations and effects */
-    body::before,
-    body::after {
-        display: none !important;
+    /* Add a minimal starry background - just 8 stars */
+    body::before {
+        background-image:
+            radial-gradient(2px 2px at 20px 30px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 90px 40px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 160px 30px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 250px 60px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 320px 80px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 400px 20px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 480px 70px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 560px 40px, var(--color-secondary), transparent);
+        background-repeat: repeat;
+        background-size: 600px 200px;
+        animation: sparkle 45s linear infinite;
+        opacity: 0.4;
     }
     
-    /* Remove all backdrop filters and complex effects */
+    /* Disable the second layer */
+    body::after {
+        display: none;
+    }
+    
+    /* Light backdrop filters */
     .navbar {
-        backdrop-filter: none !important;
-        background: rgba(42, 63, 77, 0.95) !important;
+        backdrop-filter: blur(5px) !important;
+        background: rgba(42, 63, 77, 0.92) !important;
     }
     
     .carousel-container {
-        backdrop-filter: none !important;
-        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(3px) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
     }
     
-    /* Disable video backgrounds completely */
+    /* Keep videos disabled */
     .hero-video,
     .section-video {
         display: none !important;
     }
     
-    /* Replace with static background colors */
+    /* Keep static backgrounds */
     .hero {
         background: linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 100%) !important;
     }
@@ -1104,56 +1120,72 @@ h1, h2, h3, h4, h5, h6 {
         background: var(--color-bg-secondary) !important;
     }
     
-    /* Disable all hover effects */
+    /* Add back subtle hover effects */
     .use-case-card:hover,
     .solution-card:hover,
-    .journey-card:hover,
-    .logo-item:hover,
+    .journey-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 20px var(--color-shadow) !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .logo-item:hover {
+        transform: translateY(-2px) !important;
+        transition: transform 0.2s ease !important;
+    }
+    
     .cta-button:hover,
     .submit-button:hover {
-        transform: none !important;
-        box-shadow: 0 5px 15px var(--color-shadow) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 15px rgba(186, 165, 116, 0.3) !important;
+        transition: all 0.2s ease !important;
     }
     
-    /* Simplify all box shadows */
+    /* Restore gentle animations */
     .use-case-card,
     .solution-card,
-    .journey-card,
+    .journey-card {
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 12px var(--color-shadow) !important;
+    }
+    
     .why-column,
     .navbar {
-        box-shadow: 0 2px 8px var(--color-shadow) !important;
+        box-shadow: 0 3px 10px var(--color-shadow) !important;
     }
     
-    /* Disable parallax completely */
-    .hero,
-    .hero-video {
-        transform: none !important;
-    }
-    
-    /* Disable carousel animation on mobile */
+    /* Bring back slow carousel animation */
     .carousel {
-        animation: none !important;
-        overflow-x: auto !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
+        animation: scroll 60s linear infinite !important;
+        overflow: visible !important;
+        scroll-snap-type: none !important;
+    }
+    
+    .carousel:hover {
+        animation-play-state: paused;
     }
     
     .logo-item {
-        scroll-snap-align: center !important;
+        scroll-snap-align: none !important;
         flex-shrink: 0 !important;
+        transition: transform 0.2s ease !important;
     }
     
-    /* Remove all transitions during scroll */
-    * {
-        will-change: auto !important;
+    /* Allow minimal transforms for key elements */
+    .use-case-card,
+    .solution-card,
+    .journey-card,
+    .logo-item,
+    .cta-button,
+    .submit-button {
+        will-change: transform !important;
     }
     
-    /* Force GPU acceleration off for heavy elements */
+    /* Keep other elements optimized */
     body,
     .hero,
     .navbar {
         will-change: auto !important;
-        transform: translateZ(0) !important;
     }
     
     /* Responsive layout optimizations */
@@ -1165,9 +1197,10 @@ h1, h2, h3, h4, h5, h6 {
         background-color: var(--color-bg-secondary);
         width: 100%;
         text-align: center;
-        transition: 0.2s ease !important;
-        box-shadow: 0 5px 15px var(--color-shadow);
+        transition: left 0.3s ease !important;
+        box-shadow: 0 8px 20px var(--color-shadow);
         padding: 2rem 0;
+        backdrop-filter: blur(10px);
     }
 
     .nav-menu.active {
@@ -1246,24 +1279,43 @@ h1, h2, h3, h4, h5, h6 {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    /* Reduce star complexity on tablets too */
+    /* Reduce star complexity on tablets */
     body::before,
     body::after {
-        opacity: 0.3 !important;
-        animation-duration: 40s !important;
+        opacity: 0.4 !important;
+        animation-duration: 35s !important;
     }
 }
 
 @media (max-width: 480px) {
-    /* Even more aggressive optimizations for smaller screens */
+    /* More minimal approach for very small screens */
     
-    /* Disable all animations completely */
-    * {
-        animation: none !important;
-        transition: none !important;
+    /* Keep minimal starry background but reduce it further */
+    body::before {
+        background-image:
+            radial-gradient(1px 1px at 50px 30px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 150px 60px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 280px 40px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 380px 80px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 480px 20px, var(--color-secondary), transparent);
+        opacity: 0.3;
+        animation-duration: 50s;
     }
     
-    /* Minimal typography */
+    /* Minimal hover effects */
+    .use-case-card:hover,
+    .solution-card:hover,
+    .journey-card:hover {
+        transform: translateY(-2px) !important;
+    }
+    
+    .logo-item:hover,
+    .cta-button:hover,
+    .submit-button:hover {
+        transform: translateY(-1px) !important;
+    }
+    
+    /* Typography */
     .hero-title {
         font-size: 2rem !important;
     }
@@ -1305,6 +1357,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .carousel {
         gap: 1rem !important;
+        animation-duration: 80s !important;
     }
 
     .hero-content {
@@ -1316,7 +1369,7 @@ h1, h2, h3, h4, h5, h6 {
         max-width: 100px !important;
     }
     
-    /* Reduce padding everywhere to improve scroll performance */
+    /* Reduce padding */
     .container {
         padding: 0 15px !important;
     }
@@ -1352,30 +1405,21 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Additional mobile-specific performance rules */
+/* Keep some mobile-specific performance rules */
 @media (max-width: 768px) {
     /* Optimize scroll behavior */
     html {
-        scroll-behavior: auto !important;
+        scroll-behavior: smooth !important;
     }
     
-    /* Disable all CSS filters and effects */
-    * {
-        filter: none !important;
-        backdrop-filter: none !important;
-    }
-    
-    /* Force simple rendering */
-    img {
-        image-rendering: auto !important;
-    }
-    
-    /* Reduce complexity of gradients */
+    /* Keep gradients simple */
     .cta-button,
     .submit-button {
-        background: var(--color-secondary) !important;
+        background: linear-gradient(45deg, var(--color-secondary), #d4c29a) !important;
     }
 }
+
+/* ... rest of the existing dark theme rules ... */
 
 [data-theme="dark"] body::before {
     opacity: 0.8;
