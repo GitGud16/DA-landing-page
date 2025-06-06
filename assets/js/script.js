@@ -42,6 +42,23 @@ function initMobileOptimizations() {
     if (isMobile) {
         document.body.classList.add('mobile-optimized');
         
+        // Initialize enhanced star animations
+        initStarAnimations();
+        
+        // Only reduce star effects on extremely slow devices
+        if (isVerySlowDevice && isSlowConnection) {
+            const style = document.createElement('style');
+            style.textContent = `
+                .mobile-optimized body::before,
+                .mobile-optimized body::after {
+                    opacity: 0.15 !important;
+                    animation-duration: 60s !important;
+                }
+            `;
+            document.head.appendChild(style);
+            console.log('Very slow device detected - reducing star animations');
+        }
+        
         // Always disable videos on mobile and use images instead
         const videos = document.querySelectorAll('video');
         videos.forEach(video => {
@@ -72,20 +89,7 @@ function initMobileOptimizations() {
             videoSection.style.backgroundBlendMode = 'overlay';
         }
         
-        // Reduce effects only on very slow devices
-        if (isVerySlowDevice || isSlowConnection) {
-            const style = document.createElement('style');
-            style.textContent = `
-                .mobile-optimized body::before,
-                .mobile-optimized body::after {
-                    opacity: 0.2 !important;
-                    animation-duration: 60s !important;
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        console.log('Mobile device detected - using image backgrounds');
+        console.log('Mobile device detected - using image backgrounds with enhanced star animations');
     }
 }
 
@@ -584,11 +588,62 @@ function initPerformanceMonitoring() {
     }, 3000);
 }
 
-// Initialize all functionality when DOM is loaded
+// Enhanced Star Animation Control
+function initStarAnimations() {
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    
+    if (isMobile) {
+        // Add enhanced star animation class for mobile
+        document.body.classList.add('mobile-stars-enhanced');
+        
+        // Add dynamic star animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .mobile-stars-enhanced body::before,
+            .mobile-stars-enhanced body::after {
+                animation-play-state: running !important;
+                will-change: transform, opacity !important;
+            }
+            
+            /* Add twinkle effect for mobile stars */
+            .mobile-stars-enhanced body::before {
+                animation: sparkle 30s linear infinite, twinkle 3s ease-in-out infinite alternate !important;
+            }
+            
+            .mobile-stars-enhanced body::after {
+                animation: sparkle 35s linear infinite reverse, twinkle 4s ease-in-out infinite alternate !important;
+            }
+            
+            @keyframes twinkle {
+                0% { opacity: 0.4; }
+                100% { opacity: 0.8; }
+            }
+        `;
+        
+        if (isSmallMobile) {
+            style.textContent += `
+                .mobile-stars-enhanced body::before {
+                    animation: sparkle 35s linear infinite, twinkle 2.5s ease-in-out infinite alternate !important;
+                }
+                
+                .mobile-stars-enhanced body::after {
+                    animation: sparkle 40s linear infinite reverse, twinkle 3.5s ease-in-out infinite alternate !important;
+                }
+            `;
+        }
+        
+        document.head.appendChild(style);
+        
+        console.log(`Mobile stars initialized: ${isMobile ? (isSmallMobile ? '13 stars' : '25 stars') : '0 stars'} with enhanced animations`);
+    }
+}
+
+// Enhanced initialization
 document.addEventListener('DOMContentLoaded', () => {
-    initMobileOptimizations(); // Run this first
+    initMobileOptimizations(); // This will now include star animations
     initThemeToggle();
-    initVideoOptimization(); // Enhanced video support
+    initVideoOptimization();
     initMobileNavigation();
     initSmoothScrolling();
     initContactForm();
@@ -599,7 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallaxEffect();
     initLoadingAnimation();
     initResponsiveText();
-    initPageVisibility(); // Enhanced visibility handling
+    initPageVisibility();
     initPerformanceMonitoring(); // New performance monitoring
 });
 

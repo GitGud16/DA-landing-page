@@ -1129,7 +1129,7 @@ h1, h2, h3, h4, h5, h6 {
         background: rgba(186, 165, 116, 0.5) !important;
     }
     
-    /* Restore stars and other enhancements */
+    /* Enhanced star animations for mobile - 25 stars total */
     body::before {
         background-image:
             radial-gradient(2px 2px at 20px 30px, var(--color-secondary), transparent),
@@ -1149,8 +1149,9 @@ h1, h2, h3, h4, h5, h6 {
             radial-gradient(2px 2px at 340px 220px, var(--color-secondary), transparent);
         background-repeat: repeat;
         background-size: 600px 250px;
-        animation: sparkle 35s linear infinite;
-        opacity: 0.5;
+        animation: sparkle 30s linear infinite !important; /* Faster, more visible */
+        opacity: 0.6 !important; /* More visible */
+        will-change: transform, opacity !important;
     }
     
     body::after {
@@ -1167,8 +1168,31 @@ h1, h2, h3, h4, h5, h6 {
             radial-gradient(2px 2px at 460px 170px, var(--color-secondary), transparent);
         background-repeat: repeat;
         background-size: 600px 250px;
-        animation: sparkle 40s linear infinite reverse;
-        opacity: 0.3;
+        animation: sparkle 35s linear infinite reverse !important; /* Enhanced reverse animation */
+        opacity: 0.4 !important; /* More visible */
+        will-change: transform, opacity !important;
+    }
+    
+    /* Enhanced sparkle keyframes for mobile */
+    @keyframes sparkle {
+        0% {
+            transform: translateY(0px);
+            opacity: 0.3;
+        }
+        25% {
+            opacity: 0.7;
+        }
+        50% {
+            opacity: 1;
+            transform: translateY(-125px); /* Adjusted for mobile screen */
+        }
+        75% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(-250px); /* Adjusted for mobile screen */
+            opacity: 0.3;
+        }
     }
     
     /* Enhanced backdrop filters */
@@ -1373,7 +1397,7 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.9rem !important;
     }
     
-    /* Reduce stars but keep both layers */
+    /* Enhanced animations for small mobile - 13 stars total */
     body::before {
         background-image:
             radial-gradient(1px 1px at 50px 30px, var(--color-secondary), transparent),
@@ -1384,8 +1408,8 @@ h1, h2, h3, h4, h5, h6 {
             radial-gradient(2px 2px at 100px 120px, var(--color-secondary), transparent),
             radial-gradient(1px 1px at 300px 140px, var(--color-secondary), transparent),
             radial-gradient(2px 2px at 450px 110px, var(--color-secondary), transparent);
-        opacity: 0.4;
-        animation-duration: 45s;
+        opacity: 0.5 !important; /* More visible on small screens */
+        animation: sparkle 35s linear infinite !important; /* Faster for engagement */
     }
     
     body::after {
@@ -1395,8 +1419,30 @@ h1, h2, h3, h4, h5, h6 {
             radial-gradient(1px 1px at 350px 90px, var(--color-secondary), transparent),
             radial-gradient(2px 2px at 120px 160px, var(--color-secondary), transparent),
             radial-gradient(1px 1px at 400px 130px, var(--color-secondary), transparent);
-        opacity: 0.25;
-        animation-duration: 50s;
+        opacity: 0.35 !important; /* More visible */
+        animation: sparkle 40s linear infinite reverse !important; /* Enhanced */
+    }
+    
+    /* Adjusted sparkle animation for small screens */
+    @keyframes sparkle {
+        0% {
+            transform: translateY(0px);
+            opacity: 0.2;
+        }
+        25% {
+            opacity: 0.6;
+        }
+        50% {
+            opacity: 1;
+            transform: translateY(-100px); /* Smaller movement for small screens */
+        }
+        75% {
+            opacity: 0.6;
+        }
+        100% {
+            transform: translateY(-200px); /* Adjusted for small screens */
+            opacity: 0.2;
+        }
     }
     
     /* Typography adjustments */
@@ -1511,4 +1557,18 @@ h1, h2, h3, h4, h5, h6 {
 [data-theme="dark"] .logo-item {
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 4px 15px rgba(186, 165, 116, 0.2);
+}
+
+/* Enhanced star visibility for tablets */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .journey-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Enhanced stars for tablets - keep desktop count but slower */
+    body::before,
+    body::after {
+        opacity: 0.6 !important;
+        animation-duration: 25s !important; /* Faster than desktop */
+    }
 } 
