@@ -443,5 +443,26 @@
     </footer>
 
     <script src="assets/js/script.js"></script>
+    <style>
+        /* Add to mobile media queries */
+        @media (max-width: 768px) {
+            body::before,
+            body::after {
+                animation: none;
+                opacity: 0.3;
+            }
+            .hero-video,
+            .section-video {
+                display: none; /* Replace with static images */
+            }
+            .carousel-container {
+                backdrop-filter: none;
+            }
+            
+            .navbar {
+                backdrop-filter: none;
+            }
+        }
+    </style>
 </body>
 </html> 
