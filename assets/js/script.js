@@ -31,7 +31,7 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Enhanced Mobile Performance Detection and Optimizations
+// Enhanced Mobile Optimizations with Image Backgrounds
 function initMobileOptimizations() {
     const isMobile = window.innerWidth <= 768;
     const isVerySlowDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
@@ -42,119 +42,112 @@ function initMobileOptimizations() {
     if (isMobile) {
         document.body.classList.add('mobile-optimized');
         
-        // Only disable videos on very slow devices/connections
+        // Always disable videos on mobile and use images instead
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.style.display = 'none';
+            video.pause();
+            video.src = '';
+        });
+        
+        // Set fallback image backgrounds
+        const hero = document.querySelector('.hero');
+        const videoSection = document.querySelector('.video-section');
+        
+        if (hero) {
+            // Try to use existing DGCS background as hero background
+            hero.style.background = `
+                url('assets/images/DGCS-background.avif') center/cover,
+                linear-gradient(135deg, rgba(42, 63, 77, 0.7) 0%, rgba(26, 37, 46, 0.8) 100%)
+            `;
+            hero.style.backgroundBlendMode = 'overlay';
+        }
+        
+        if (videoSection) {
+            // Use our-solutions background for video section
+            videoSection.style.background = `
+                url('assets/images/our-solutions-background.avif') center/cover,
+                linear-gradient(45deg, rgba(186, 165, 116, 0.4) 0%, rgba(212, 194, 154, 0.5) 100%)
+            `;
+            videoSection.style.backgroundBlendMode = 'overlay';
+        }
+        
+        // Reduce effects only on very slow devices
         if (isVerySlowDevice || isSlowConnection) {
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                video.style.display = 'none';
-                handleVideoError(video);
-            });
-            
-            // Also reduce stars further
             const style = document.createElement('style');
             style.textContent = `
                 .mobile-optimized body::before,
                 .mobile-optimized body::after {
-                    opacity: 0.15 !important;
+                    opacity: 0.2 !important;
                     animation-duration: 60s !important;
                 }
             `;
             document.head.appendChild(style);
-        } else {
-            // Enable videos with mobile optimizations
-            console.log('Mobile device detected - enabling optimized videos');
         }
+        
+        console.log('Mobile device detected - using image backgrounds');
     }
 }
 
-// Enhanced Video Loading with Mobile Optimization
+// Simplified Video Optimization (since we're disabling videos on mobile)
 function initVideoOptimization() {
     const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Completely disable videos on mobile
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.style.display = 'none';
+            video.pause();
+            video.remove(); // Remove from DOM to save memory
+        });
+        return;
+    }
+    
+    // Enhanced video loading for desktop only
     const videos = document.querySelectorAll('video');
     
     videos.forEach(video => {
-        // Set loading state
-        video.setAttribute('data-loading', 'true');
+        video.setAttribute('preload', 'auto');
         
-        // Mobile-specific optimizations
-        if (isMobile) {
-            // Reduce video quality on mobile
-            video.playbackRate = 1.0;
-            video.muted = true;
-            video.playsInline = true;
-            
-            // Add mobile-specific attributes
-            video.setAttribute('preload', 'metadata');
-            video.setAttribute('poster', video.getAttribute('data-poster') || '');
-            
-            // Lower quality on slow connections
-            if ('connection' in navigator) {
-                const connection = navigator.connection;
-                if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
-                    video.style.display = 'none';
-                    return;
-                }
-                if (connection.effectiveType === '3g') {
-                    video.playbackRate = 0.8; // Slower playback
-                }
+        // Set video quality based on connection
+        if ('connection' in navigator) {
+            const connection = navigator.connection;
+            if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+                video.style.display = 'none';
+                return;
             }
-        } else {
-            // Desktop optimizations
-            video.setAttribute('preload', 'auto');
         }
         
-        // Smart loading with fade-in effect
+        // Enhanced loading with fade-in effect
         video.addEventListener('loadstart', () => {
             video.style.opacity = '0';
         });
         
         video.addEventListener('canplay', () => {
-            video.setAttribute('data-loaded', 'true');
-            video.removeAttribute('data-loading');
             video.style.opacity = '1';
+            video.style.transition = 'opacity 0.5s ease';
         });
         
-        // Enhanced Intersection Observer for better performance
+        // Intersection Observer for performance
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Only play if viewport is visible and user hasn't scrolled too fast
-                    setTimeout(() => {
-                        if (entry.isIntersecting) {
-                            video.play().catch(e => {
-                                console.log('Video play failed:', e);
-                                handleVideoError(video);
-                            });
-                        }
-                    }, 100);
+                    video.play().catch(e => console.log('Video play failed:', e));
                 } else {
                     video.pause();
                 }
             });
-        }, { 
-            threshold: isMobile ? 0.3 : 0.1, // Higher threshold on mobile
-            rootMargin: '50px'
-        });
+        }, { threshold: 0.1 });
         
         observer.observe(video);
         
-        // Enhanced error handling
+        // Error handling
         video.addEventListener('error', (e) => {
             console.log('Video error:', e);
-            handleVideoError(video);
-        });
-        
-        // Performance monitoring
-        video.addEventListener('stalled', () => {
-            console.log('Video stalled, reducing quality');
-            if (isMobile) {
-                video.playbackRate = 0.5;
-            }
-        });
-        
-        // Memory optimization
-        video.addEventListener('suspend', () => {
-            // Video suspended, good for memory
+            video.style.display = 'none';
+            const parent = video.parentElement;
+            parent.style.background = 'linear-gradient(135deg, var(--color-secondary) 0%, #d4c29a 100%)';
         });
     });
 }
