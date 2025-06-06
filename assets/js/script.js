@@ -40,123 +40,153 @@ function initMobileOptimizations() {
          navigator.connection.effectiveType === '2g');
     
     if (isMobile) {
-        // Add mobile-optimized class for enhanced styles
         document.body.classList.add('mobile-optimized');
         
-        // Only remove stars on very slow devices/connections
+        // Only disable videos on very slow devices/connections
         if (isVerySlowDevice || isSlowConnection) {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.style.display = 'none';
+                handleVideoError(video);
+            });
+            
+            // Also reduce stars further
             const style = document.createElement('style');
             style.textContent = `
                 .mobile-optimized body::before,
                 .mobile-optimized body::after {
-                    opacity: 0.1 !important;
+                    opacity: 0.15 !important;
                     animation-duration: 60s !important;
                 }
             `;
             document.head.appendChild(style);
-        }
-        
-        // Keep videos disabled but enhance fallbacks
-        const heroVideo = document.querySelector('.hero-video');
-        const sectionVideo = document.querySelector('.section-video');
-        
-        if (heroVideo) {
-            heroVideo.style.display = 'none';
-            const hero = document.querySelector('.hero');
-            hero.style.background = 'linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 60%, #2a3f4d 100%)';
-        }
-        
-        if (sectionVideo) {
-            sectionVideo.style.display = 'none';
-            const videoSection = document.querySelector('.video-section');
-            videoSection.style.background = 'linear-gradient(45deg, var(--color-secondary) 0%, #d4c29a 50%, #baa574 100%)';
+        } else {
+            // Enable videos with mobile optimizations
+            console.log('Mobile device detected - enabling optimized videos');
         }
     }
 }
 
-// Optimized Video Loading for Mobile
+// Enhanced Video Loading with Mobile Optimization
 function initVideoOptimization() {
     const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        // Disable videos on mobile but keep fallback backgrounds
-        const videos = document.querySelectorAll('video');
-        videos.forEach(video => {
-            video.style.display = 'none';
-            video.pause();
-            video.src = '';
-        });
-        return;
-    }
-    
     const videos = document.querySelectorAll('video');
     
     videos.forEach(video => {
-        // Set video quality based on connection
-        if ('connection' in navigator) {
-            const connection = navigator.connection;
-            if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
-                video.style.display = 'none';
-                return;
+        // Set loading state
+        video.setAttribute('data-loading', 'true');
+        
+        // Mobile-specific optimizations
+        if (isMobile) {
+            // Reduce video quality on mobile
+            video.playbackRate = 1.0;
+            video.muted = true;
+            video.playsInline = true;
+            
+            // Add mobile-specific attributes
+            video.setAttribute('preload', 'metadata');
+            video.setAttribute('poster', video.getAttribute('data-poster') || '');
+            
+            // Lower quality on slow connections
+            if ('connection' in navigator) {
+                const connection = navigator.connection;
+                if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+                    video.style.display = 'none';
+                    return;
+                }
+                if (connection.effectiveType === '3g') {
+                    video.playbackRate = 0.8; // Slower playback
+                }
             }
+        } else {
+            // Desktop optimizations
+            video.setAttribute('preload', 'auto');
         }
         
-        // Add loading optimization
+        // Smart loading with fade-in effect
         video.addEventListener('loadstart', () => {
             video.style.opacity = '0';
         });
         
         video.addEventListener('canplay', () => {
+            video.setAttribute('data-loaded', 'true');
+            video.removeAttribute('data-loading');
             video.style.opacity = '1';
-            video.style.transition = 'opacity 0.5s ease';
         });
         
-        // Pause video when not in viewport (performance optimization)
+        // Enhanced Intersection Observer for better performance
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    video.play().catch(e => console.log('Video play failed:', e));
+                    // Only play if viewport is visible and user hasn't scrolled too fast
+                    setTimeout(() => {
+                        if (entry.isIntersecting) {
+                            video.play().catch(e => {
+                                console.log('Video play failed:', e);
+                                handleVideoError(video);
+                            });
+                        }
+                    }, 100);
                 } else {
                     video.pause();
                 }
             });
-        }, { threshold: 0.1 });
+        }, { 
+            threshold: isMobile ? 0.3 : 0.1, // Higher threshold on mobile
+            rootMargin: '50px'
+        });
         
         observer.observe(video);
         
-        // Handle video errors gracefully
+        // Enhanced error handling
         video.addEventListener('error', (e) => {
             console.log('Video error:', e);
-            video.style.display = 'none';
-            // Add fallback background color or image
-            const parent = video.parentElement;
-            parent.style.background = 'linear-gradient(135deg, var(--color-secondary) 0%, #d4c29a 100%)';
+            handleVideoError(video);
+        });
+        
+        // Performance monitoring
+        video.addEventListener('stalled', () => {
+            console.log('Video stalled, reducing quality');
+            if (isMobile) {
+                video.playbackRate = 0.5;
+            }
+        });
+        
+        // Memory optimization
+        video.addEventListener('suspend', () => {
+            // Video suspended, good for memory
         });
     });
 }
 
-// Enhanced Parallax Effect (light on mobile, full on desktop)
+// Handle video errors gracefully
+function handleVideoError(video) {
+    video.style.display = 'none';
+    const parent = video.parentElement;
+    
+    // Add appropriate fallback based on video type
+    if (video.classList.contains('hero-video') || parent.classList.contains('hero')) {
+        parent.style.background = 'linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 60%, #2a3f4d 100%)';
+    } else {
+        parent.style.background = 'linear-gradient(45deg, var(--color-secondary) 0%, #d4c29a 50%, #baa574 100%)';
+    }
+}
+
+// Fixed Parallax Effect (remove navbar movement)
 function initParallaxEffect() {
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
-        // Light parallax on mobile - multiple elements
+        // Light parallax on mobile - only hero element
         const hero = document.querySelector('.hero');
-        const navbar = document.querySelector('.navbar');
         let ticking = false;
         
         function updateMobileParallax() {
             const scrolled = window.pageYOffset;
             const heroRate = scrolled * -0.15;
-            const navbarRate = scrolled * 0.02;
             
             if (hero && scrolled < window.innerHeight * 1.5) {
                 hero.style.transform = `translateY(${heroRate}px)`;
-            }
-            
-            // Subtle navbar movement
-            if (navbar && scrolled > 0) {
-                navbar.style.transform = `translateY(${navbarRate}px)`;
             }
             
             ticking = false;
@@ -173,10 +203,9 @@ function initParallaxEffect() {
         return;
     }
     
-    // Enhanced parallax for desktop
+    // Enhanced parallax for desktop - only hero elements
     const hero = document.querySelector('.hero');
     const heroVideo = document.querySelector('.hero-video');
-    const navbar = document.querySelector('.navbar');
     
     let ticking = false;
     
@@ -184,7 +213,6 @@ function initParallaxEffect() {
         const scrolled = window.pageYOffset;
         const heroRate = scrolled * -0.25;
         const videoRate = scrolled * -0.15;
-        const navbarRate = scrolled * 0.05;
         
         if (hero) {
             hero.style.transform = `translateY(${heroRate}px)`;
@@ -192,10 +220,6 @@ function initParallaxEffect() {
         
         if (heroVideo) {
             heroVideo.style.transform = `translateY(${videoRate}px)`;
-        }
-        
-        if (navbar && scrolled > 0) {
-            navbar.style.transform = `translateY(${navbarRate}px)`;
         }
         
         ticking = false;
@@ -508,35 +532,70 @@ function initResponsiveText() {
     window.addEventListener('resize', adjustTextSize);
 }
 
-// Enhanced Page Visibility API for Videos
+// Enhanced Page Visibility API
 function initPageVisibility() {
     document.addEventListener('visibilitychange', () => {
         const videos = document.querySelectorAll('video');
-        const carousel = document.getElementById('supportCarousel');
         
         if (document.hidden) {
-            // Pause videos when page is hidden
-            videos.forEach(video => video.pause());
-            if (carousel) carousel.style.animationPlayState = 'paused';
+            // Pause all videos when tab is hidden
+            videos.forEach(video => {
+                video.pause();
+            });
         } else {
-            // Resume videos when page is visible
+            // Resume videos that are in viewport when tab becomes visible
             videos.forEach(video => {
                 const rect = video.getBoundingClientRect();
-                const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;
-                if (isInViewport) {
-                    video.play().catch(e => console.log('Video play failed:', e));
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible) {
+                    video.play().catch(e => console.log('Resume play failed:', e));
                 }
             });
-            if (carousel) carousel.style.animationPlayState = 'running';
         }
     });
+}
+
+// Add Performance Monitoring
+function initPerformanceMonitoring() {
+    let frameCount = 0;
+    let lastTime = performance.now();
+    
+    function measureFPS() {
+        frameCount++;
+        const currentTime = performance.now();
+        
+        if (currentTime - lastTime >= 1000) {
+            const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+            
+            // If FPS drops below 30 on mobile, disable videos
+            if (window.innerWidth <= 768 && fps < 30) {
+                console.log(`Low FPS detected (${fps}), disabling videos`);
+                const videos = document.querySelectorAll('video');
+                videos.forEach(video => {
+                    video.style.display = 'none';
+                    handleVideoError(video);
+                });
+            }
+            
+            frameCount = 0;
+            lastTime = currentTime;
+        }
+        
+        requestAnimationFrame(measureFPS);
+    }
+    
+    // Start monitoring after page load
+    setTimeout(() => {
+        requestAnimationFrame(measureFPS);
+    }, 3000);
 }
 
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initMobileOptimizations(); // Run this first
     initThemeToggle();
-    initVideoOptimization();
+    initVideoOptimization(); // Enhanced video support
     initMobileNavigation();
     initSmoothScrolling();
     initContactForm();
@@ -547,7 +606,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallaxEffect();
     initLoadingAnimation();
     initResponsiveText();
-    initPageVisibility();
+    initPageVisibility(); // Enhanced visibility handling
+    initPerformanceMonitoring(); // New performance monitoring
 });
 
 // Optimized resize handler
