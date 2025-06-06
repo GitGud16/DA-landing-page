@@ -1064,9 +1064,9 @@ h1, h2, h3, h4, h5, h6 {
     color: #ccc;
 }
 
-/* COMPREHENSIVE MOBILE PERFORMANCE OPTIMIZATIONS */
+/* ENHANCED MOBILE OPTIMIZATIONS - More Visual Appeal */
 @media (max-width: 768px) {
-    /* Add a minimal starry background - just 8 stars */
+    /* Restore more stars - 15 stars in first layer */
     body::before {
         background-image:
             radial-gradient(2px 2px at 20px 30px, var(--color-secondary), transparent),
@@ -1076,119 +1076,146 @@ h1, h2, h3, h4, h5, h6 {
             radial-gradient(2px 2px at 320px 80px, var(--color-secondary), transparent),
             radial-gradient(1px 1px at 400px 20px, var(--color-secondary), transparent),
             radial-gradient(2px 2px at 480px 70px, var(--color-secondary), transparent),
-            radial-gradient(1px 1px at 560px 40px, var(--color-secondary), transparent);
+            radial-gradient(1px 1px at 560px 40px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 80px 120px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 180px 140px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 280px 110px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 380px 160px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 480px 130px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 120px 200px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 340px 220px, var(--color-secondary), transparent);
         background-repeat: repeat;
-        background-size: 600px 200px;
-        animation: sparkle 45s linear infinite;
-        opacity: 0.4;
+        background-size: 600px 250px;
+        animation: sparkle 35s linear infinite;
+        opacity: 0.5;
     }
     
-    /* Disable the second layer */
+    /* Add back second star layer with fewer stars */
     body::after {
-        display: none;
+        background-image:
+            radial-gradient(1px 1px at 40px 50px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 140px 20px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 220px 90px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 300px 40px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 420px 100px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 500px 30px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 60px 170px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 200px 180px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 360px 190px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 460px 170px, var(--color-secondary), transparent);
+        background-repeat: repeat;
+        background-size: 600px 250px;
+        animation: sparkle 40s linear infinite reverse;
+        opacity: 0.3;
     }
     
-    /* Light backdrop filters */
+    /* Enhanced backdrop filters */
     .navbar {
-        backdrop-filter: blur(5px) !important;
-        background: rgba(42, 63, 77, 0.92) !important;
+        backdrop-filter: blur(8px) saturate(180%) !important;
+        background: rgba(42, 63, 77, 0.88) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
     }
     
     .carousel-container {
-        backdrop-filter: blur(3px) !important;
-        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(6px) saturate(120%) !important;
+        background: rgba(255, 255, 255, 0.12) !important;
+        border: 1px solid rgba(186, 165, 116, 0.2) !important;
     }
     
-    /* Keep videos disabled */
+    /* Keep videos disabled but enhance background gradients */
     .hero-video,
     .section-video {
         display: none !important;
     }
     
-    /* Keep static backgrounds */
     .hero {
-        background: linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 100%) !important;
+        background: linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 60%, #2a3f4d 100%) !important;
     }
     
     .video-section {
-        background: linear-gradient(45deg, var(--color-secondary), #d4c29a) !important;
-        height: 20vh !important;
+        background: linear-gradient(45deg, var(--color-secondary) 0%, #d4c29a 50%, #baa574 100%) !important;
+        height: 25vh !important;
     }
     
-    .dgcs-section,
+    .dgcs-section {
+        background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-accent) 100%) !important;
+    }
+    
     .our-solutions {
-        background: var(--color-bg-secondary) !important;
+        background: linear-gradient(180deg, var(--color-bg-accent) 0%, var(--color-bg-secondary) 100%) !important;
     }
     
-    /* Add back subtle hover effects */
+    /* Enhanced hover effects with more movement */
     .use-case-card:hover,
     .solution-card:hover,
     .journey-card:hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 8px 20px var(--color-shadow) !important;
-        transition: all 0.2s ease !important;
+        transform: translateY(-5px) scale(1.02) !important;
+        box-shadow: 0 12px 30px var(--color-shadow) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     
     .logo-item:hover {
-        transform: translateY(-2px) !important;
-        transition: transform 0.2s ease !important;
+        transform: translateY(-3px) scale(1.05) !important;
+        box-shadow: 0 8px 20px rgba(186, 165, 116, 0.3) !important;
+        transition: all 0.3s ease !important;
     }
     
     .cta-button:hover,
     .submit-button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 6px 15px rgba(186, 165, 116, 0.3) !important;
-        transition: all 0.2s ease !important;
+        transform: translateY(-2px) scale(1.05) !important;
+        box-shadow: 0 10px 25px rgba(186, 165, 116, 0.4) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     
-    /* Restore gentle animations */
+    /* Enhanced base styles with better shadows */
     .use-case-card,
     .solution-card,
     .journey-card {
-        transition: all 0.2s ease !important;
-        box-shadow: 0 4px 12px var(--color-shadow) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 6px 20px var(--color-shadow) !important;
+        border: 1px solid var(--color-border) !important;
     }
     
-    .why-column,
-    .navbar {
-        box-shadow: 0 3px 10px var(--color-shadow) !important;
+    .why-column {
+        box-shadow: 0 5px 15px var(--color-shadow) !important;
+        transition: all 0.3s ease !important;
     }
     
-    /* Bring back slow carousel animation */
+    .why-column:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px var(--color-shadow) !important;
+    }
+    
+    /* Restore faster carousel animation */
     .carousel {
-        animation: scroll 60s linear infinite !important;
+        animation: scroll 50s linear infinite !important;
         overflow: visible !important;
-        scroll-snap-type: none !important;
     }
     
     .carousel:hover {
         animation-play-state: paused;
     }
     
+    /* Enhanced logo items */
     .logo-item {
-        scroll-snap-align: none !important;
         flex-shrink: 0 !important;
-        transition: transform 0.2s ease !important;
+        transition: all 0.3s ease !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(5px) !important;
     }
     
-    /* Allow minimal transforms for key elements */
+    /* Allow transforms for more visual appeal */
     .use-case-card,
     .solution-card,
     .journey-card,
     .logo-item,
     .cta-button,
-    .submit-button {
+    .submit-button,
+    .why-column {
         will-change: transform !important;
     }
     
-    /* Keep other elements optimized */
-    body,
-    .hero,
-    .navbar {
-        will-change: auto !important;
-    }
-    
-    /* Responsive layout optimizations */
+    /* Enhanced navigation */
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1197,24 +1224,48 @@ h1, h2, h3, h4, h5, h6 {
         background-color: var(--color-bg-secondary);
         width: 100%;
         text-align: center;
-        transition: left 0.3s ease !important;
-        box-shadow: 0 8px 20px var(--color-shadow);
+        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         padding: 2rem 0;
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(15px) saturate(180%);
     }
 
     .nav-menu.active {
         left: 0;
     }
 
+    /* Add subtle animations to nav links */
+    .nav-menu a {
+        transition: all 0.3s ease !important;
+        padding: 0.5rem 1rem;
+        margin: 0.2rem 0;
+        border-radius: 8px;
+    }
+    
+    .nav-menu a:hover {
+        background: rgba(186, 165, 116, 0.1);
+        transform: translateX(5px);
+    }
+
     .hamburger {
         display: flex;
+        transition: all 0.3s ease !important;
+    }
+    
+    .hamburger:hover {
+        transform: scale(1.1);
     }
 
     .logo-image {
         height: 30px;
+        transition: all 0.3s ease !important;
+    }
+    
+    .logo-image:hover {
+        transform: scale(1.05);
     }
 
+    /* Typography remains the same */
     .hero-title {
         font-size: 2.5rem;
     }
@@ -1247,7 +1298,7 @@ h1, h2, h3, h4, h5, h6 {
     .solutions-grid,
     .journey-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem !important;
+        gap: 2rem !important;
     }
 
     .why-grid {
@@ -1279,40 +1330,54 @@ h1, h2, h3, h4, h5, h6 {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    /* Reduce star complexity on tablets */
+    /* Enhanced stars for tablets */
     body::before,
     body::after {
-        opacity: 0.4 !important;
-        animation-duration: 35s !important;
+        opacity: 0.5 !important;
+        animation-duration: 30s !important;
     }
 }
 
 @media (max-width: 480px) {
-    /* More minimal approach for very small screens */
+    /* Balanced approach for very small screens */
     
-    /* Keep minimal starry background but reduce it further */
+    /* Reduce stars but keep both layers */
     body::before {
         background-image:
             radial-gradient(1px 1px at 50px 30px, var(--color-secondary), transparent),
             radial-gradient(2px 2px at 150px 60px, var(--color-secondary), transparent),
             radial-gradient(1px 1px at 280px 40px, var(--color-secondary), transparent),
             radial-gradient(2px 2px at 380px 80px, var(--color-secondary), transparent),
-            radial-gradient(1px 1px at 480px 20px, var(--color-secondary), transparent);
-        opacity: 0.3;
+            radial-gradient(1px 1px at 480px 20px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 100px 120px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 300px 140px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 450px 110px, var(--color-secondary), transparent);
+        opacity: 0.4;
+        animation-duration: 45s;
+    }
+    
+    body::after {
+        background-image:
+            radial-gradient(1px 1px at 80px 50px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 200px 20px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 350px 90px, var(--color-secondary), transparent),
+            radial-gradient(2px 2px at 120px 160px, var(--color-secondary), transparent),
+            radial-gradient(1px 1px at 400px 130px, var(--color-secondary), transparent);
+        opacity: 0.25;
         animation-duration: 50s;
     }
     
-    /* Minimal hover effects */
+    /* Slightly reduced hover effects but still present */
     .use-case-card:hover,
     .solution-card:hover,
     .journey-card:hover {
-        transform: translateY(-2px) !important;
+        transform: translateY(-3px) scale(1.01) !important;
     }
     
     .logo-item:hover,
     .cta-button:hover,
     .submit-button:hover {
-        transform: translateY(-1px) !important;
+        transform: translateY(-2px) scale(1.02) !important;
     }
     
     /* Typography */
@@ -1345,7 +1410,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .video-section {
-        height: 15vh !important;
+        height: 20vh !important;
     }
 
     .use-case-card,
@@ -1356,8 +1421,8 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .carousel {
-        gap: 1rem !important;
-        animation-duration: 80s !important;
+        gap: 1.2rem !important;
+        animation-duration: 70s !important;
     }
 
     .hero-content {
@@ -1365,11 +1430,11 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .logo-item img {
-        max-height: 40px !important;
-        max-width: 100px !important;
+        max-height: 45px !important;
+        max-width: 110px !important;
     }
     
-    /* Reduce padding */
+    /* Spacing */
     .container {
         padding: 0 15px !important;
     }
@@ -1405,21 +1470,26 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Keep some mobile-specific performance rules */
+/* Enhanced mobile-specific performance rules */
 @media (max-width: 768px) {
-    /* Optimize scroll behavior */
+    /* Smooth scroll behavior */
     html {
         scroll-behavior: smooth !important;
     }
     
-    /* Keep gradients simple */
+    /* Enhanced gradients */
     .cta-button,
     .submit-button {
         background: linear-gradient(45deg, var(--color-secondary), #d4c29a) !important;
     }
+    
+    /* Add subtle gradient overlays */
+    .about-us {
+        background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-accent) 100%) !important;
+    }
 }
 
-/* ... rest of the existing dark theme rules ... */
+/* ... rest of existing dark theme rules ... */
 
 [data-theme="dark"] body::before {
     opacity: 0.8;

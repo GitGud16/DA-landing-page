@@ -31,7 +31,7 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Balanced Mobile Performance Detection and Optimizations
+// Enhanced Mobile Performance Detection and Optimizations
 function initMobileOptimizations() {
     const isMobile = window.innerWidth <= 768;
     const isVerySlowDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
@@ -39,8 +39,8 @@ function initMobileOptimizations() {
         (navigator.connection.effectiveType === 'slow-2g' || 
          navigator.connection.effectiveType === '2g');
     
-    if (isMobile || isVerySlowDevice || isSlowConnection) {
-        // Add mobile-optimized class
+    if (isMobile) {
+        // Add mobile-optimized class for enhanced styles
         document.body.classList.add('mobile-optimized');
         
         // Only remove stars on very slow devices/connections
@@ -49,26 +49,27 @@ function initMobileOptimizations() {
             style.textContent = `
                 .mobile-optimized body::before,
                 .mobile-optimized body::after {
-                    display: none !important;
+                    opacity: 0.1 !important;
+                    animation-duration: 60s !important;
                 }
             `;
             document.head.appendChild(style);
         }
         
-        // Keep videos disabled on mobile
+        // Keep videos disabled but enhance fallbacks
         const heroVideo = document.querySelector('.hero-video');
         const sectionVideo = document.querySelector('.section-video');
         
         if (heroVideo) {
             heroVideo.style.display = 'none';
-            document.querySelector('.hero').style.background = 
-                'linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 100%)';
+            const hero = document.querySelector('.hero');
+            hero.style.background = 'linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 60%, #2a3f4d 100%)';
         }
         
         if (sectionVideo) {
             sectionVideo.style.display = 'none';
-            document.querySelector('.video-section').style.background = 
-                'linear-gradient(45deg, var(--color-secondary), #d4c29a)';
+            const videoSection = document.querySelector('.video-section');
+            videoSection.style.background = 'linear-gradient(45deg, var(--color-secondary) 0%, #d4c29a 50%, #baa574 100%)';
         }
     }
 }
@@ -134,19 +135,28 @@ function initVideoOptimization() {
     });
 }
 
-// Balanced Parallax Effect (very light on mobile)
+// Enhanced Parallax Effect (light on mobile, full on desktop)
 function initParallaxEffect() {
-    if (window.innerWidth <= 768) {
-        // Very subtle parallax on mobile - just for hero section
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Light parallax on mobile - multiple elements
         const hero = document.querySelector('.hero');
+        const navbar = document.querySelector('.navbar');
         let ticking = false;
         
         function updateMobileParallax() {
             const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.1; // Very minimal movement
+            const heroRate = scrolled * -0.15;
+            const navbarRate = scrolled * 0.02;
             
-            if (hero && scrolled < window.innerHeight) {
-                hero.style.transform = `translateY(${rate}px)`;
+            if (hero && scrolled < window.innerHeight * 1.5) {
+                hero.style.transform = `translateY(${heroRate}px)`;
+            }
+            
+            // Subtle navbar movement
+            if (navbar && scrolled > 0) {
+                navbar.style.transform = `translateY(${navbarRate}px)`;
             }
             
             ticking = false;
@@ -163,22 +173,29 @@ function initParallaxEffect() {
         return;
     }
     
-    // Full parallax for desktop
+    // Enhanced parallax for desktop
     const hero = document.querySelector('.hero');
     const heroVideo = document.querySelector('.hero-video');
+    const navbar = document.querySelector('.navbar');
     
     let ticking = false;
     
     function updateParallax() {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.2;
+        const heroRate = scrolled * -0.25;
+        const videoRate = scrolled * -0.15;
+        const navbarRate = scrolled * 0.05;
         
         if (hero) {
-            hero.style.transform = `translateY(${rate}px)`;
+            hero.style.transform = `translateY(${heroRate}px)`;
         }
         
         if (heroVideo) {
-            heroVideo.style.transform = `translateY(${rate * 0.3}px)`;
+            heroVideo.style.transform = `translateY(${videoRate}px)`;
+        }
+        
+        if (navbar && scrolled > 0) {
+            navbar.style.transform = `translateY(${navbarRate}px)`;
         }
         
         ticking = false;
@@ -320,22 +337,25 @@ function showFormMessage(message, type) {
     }, 5000);
 }
 
-// Balanced Scroll Animations (simplified on mobile)
+// Enhanced Scroll Animations with stagger effect
 function initScrollAnimations() {
     const isMobile = window.innerWidth <= 768;
     
     const observerOptions = {
-        threshold: isMobile ? 0.05 : 0.1, // Lower threshold on mobile for faster trigger
-        rootMargin: isMobile ? '0px 0px -20px 0px' : '0px 0px -50px 0px'
+        threshold: isMobile ? 0.05 : 0.1,
+        rootMargin: isMobile ? '0px 0px -10px 0px' : '0px 0px -50px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                if (!isMobile) {
-                    entry.target.style.transform = 'translateY(0)';
-                }
+                // Stagger the animations
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    if (!isMobile) {
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                }, index * 100); // 100ms delay between each element
             }
         });
     }, observerOptions);
@@ -346,9 +366,9 @@ function initScrollAnimations() {
         el.style.opacity = '0';
         if (!isMobile) {
             el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
         } else {
-            el.style.transition = 'opacity 0.4s ease'; // Faster on mobile
+            el.style.transition = 'opacity 0.4s ease';
         }
         observer.observe(el);
     });
@@ -374,18 +394,47 @@ function initNavbarScroll() {
     });
 }
 
-// Carousel Auto-pause on Hover
+// Enhanced Carousel with touch support
 function initCarousel() {
-    const carousel = document.getElementById('supportCarousel');
-    if (carousel) {
-        carousel.addEventListener('mouseenter', () => {
-            carousel.style.animationPlayState = 'paused';
-        });
+    const carousel = document.querySelector('.carousel');
+    const isMobile = window.innerWidth <= 768;
+    
+    if (!carousel) return;
+    
+    if (isMobile) {
+        // Add touch support for mobile
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
         
-        carousel.addEventListener('mouseleave', () => {
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            carousel.style.animationPlayState = 'paused';
+        }, { passive: true });
+        
+        carousel.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+            const diff = startX - currentX;
+            carousel.style.transform = `translateX(calc(-40% - 1.2rem - ${diff}px))`;
+        }, { passive: true });
+        
+        carousel.addEventListener('touchend', () => {
+            isDragging = false;
             carousel.style.animationPlayState = 'running';
+            carousel.style.transform = '';
         });
     }
+    
+    // Pause on hover for all devices
+    carousel.addEventListener('mouseenter', () => {
+        carousel.style.animationPlayState = 'paused';
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+        carousel.style.animationPlayState = 'running';
+    });
 }
 
 // Button Click Handlers
@@ -408,35 +457,34 @@ function initButtonHandlers() {
     });
 }
 
-// Loading Animation
+// Add Loading Animation for Cards
 function initLoadingAnimation() {
-    window.addEventListener('load', () => {
-        document.body.classList.add('loaded');
-        
-        // Add loading animation styles
-        const style = document.createElement('style');
-        style.textContent = `
-            body:not(.loaded) * {
-                animation-play-state: paused !important;
-            }
-            
-            .loaded .hero-content {
-                animation: fadeInUp 1s ease forwards;
-            }
-            
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
+    const cards = document.querySelectorAll('.use-case-card, .solution-card, .journey-card');
+    
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('fade-in-up');
     });
+    
+    // Add CSS for the animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Responsive Text Sizing
