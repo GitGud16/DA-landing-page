@@ -178,11 +178,14 @@ class DGCSPricing {
     }
     
     handleContactUs(button) {
-        // Scroll to contact section
-        const contactSection = document.querySelector('.contact-us');
-        if (contactSection) {
-            const headerHeight = document.querySelector('.navbar').offsetHeight;
-            const targetPosition = contactSection.offsetTop - headerHeight;
+        // Scroll to contact form specifically, not contact info
+        const contactForm = document.querySelector('.contact-form-area');
+        if (contactForm) {
+            // Use getBoundingClientRect for accurate positioning
+            const rect = contactForm.getBoundingClientRect();
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            const headerHeight = 80; // Fixed header height
+            const targetPosition = rect.top + currentScroll - headerHeight;
             
             window.scrollTo({
                 top: targetPosition,
@@ -191,11 +194,24 @@ class DGCSPricing {
             
             // Highlight contact form
             setTimeout(() => {
-                const contactForm = document.querySelector('.contact-form-area');
                 if (contactForm) {
                     contactForm.style.animation = 'pulse 2s ease-in-out';
                 }
-            }, 500);
+            }, 800);
+        } else {
+            // Fallback to general contact section if form not found
+            const contactSection = document.querySelector('.contact-us');
+            if (contactSection) {
+                const rect = contactSection.getBoundingClientRect();
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                const headerHeight = 80;
+                const targetPosition = rect.top + currentScroll - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
         }
     }
     

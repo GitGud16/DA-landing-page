@@ -534,4 +534,164 @@
 .feature-image img.loaded,
 .dgcs-preview-image.loaded {
     opacity: 1;
+}
+
+/* Mobile responsiveness for DGCS page */
+@media (max-width: 768px) {
+    /* Hero section - fix text overflow */
+    .dgcs-hero-title {
+        font-size: 2.5rem;
+        line-height: 1.1;
+        padding: 0 1rem;
+        text-align: center;
+    }
+    
+    .dgcs-hero-content {
+        padding: 0 1rem;
+        max-width: 100%;
+    }
+    
+    /* Preview section - much larger image on mobile */
+    .dgcs-preview-section {
+        padding: 1rem 0;
+    }
+    
+    .dgcs-preview-container {
+        padding: 0;
+    }
+    
+    .dgcs-preview-image {
+        width: calc(100% + 2rem);
+        max-width: none;
+        margin: 0 -1rem;
+        border-radius: 8px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        height: auto;
+        min-height: 400px;
+        object-fit: cover;
+    }
+    
+    /* Features section - mobile optimized */
+    .dgcs-features-section {
+        padding: 3rem 0;
+    }
+    
+    .features-grid {
+        gap: 1.5rem;
+        margin-top: 2rem;
+        padding: 0 1rem;
+    }
+    
+    .feature-card {
+        flex-direction: column !important;
+        min-height: auto;
+        padding: 1.5rem;
+        gap: 1.5rem;
+        text-align: center;
+    }
+    
+    .feature-card:nth-child(even) {
+        flex-direction: column !important;
+        background: var(--color-bg-secondary);
+    }
+    
+    .feature-content {
+        gap: 1rem;
+        order: 2;
+    }
+    
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+        margin: 0 auto;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.2rem;
+        margin: 0.8rem 0 0.6rem 0;
+    }
+    
+    .feature-card p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .feature-image {
+        flex: none;
+        width: 100%;
+        height: 180px;
+        order: 1;
+        margin: 0;
+    }
+    
+    /* Pricing section */
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .pro-plan {
+        transform: none;
+    }
+    
+    .pricing-header-card {
+        padding: 1.5rem;
+    }
+    
+    .pricing-header-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .amount {
+        font-size: 2rem;
+    }
+    
+    .pricing-features {
+        padding: 1.5rem;
+    }
+    
+    .pricing-actions {
+        padding: 0 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small screens */
+    .dgcs-hero-title {
+        font-size: 2rem;
+        padding: 0 0.5rem;
+    }
+    
+    .feature-card {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .feature-image {
+        height: 160px;
+    }
+    
+    .feature-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.8rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .feature-card p {
+        font-size: 0.85rem;
+    }
+    
+    .pricing-header-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .amount {
+        font-size: 1.8rem;
+    }
 } 
