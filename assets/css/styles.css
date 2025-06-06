@@ -1064,8 +1064,99 @@ h1, h2, h3, h4, h5, h6 {
     color: #ccc;
 }
 
-/* Responsive Design */
+/* COMPREHENSIVE MOBILE PERFORMANCE OPTIMIZATIONS */
 @media (max-width: 768px) {
+    /* CRITICAL: Disable all heavy animations and effects */
+    body::before,
+    body::after {
+        display: none !important;
+    }
+    
+    /* Remove all backdrop filters and complex effects */
+    .navbar {
+        backdrop-filter: none !important;
+        background: rgba(42, 63, 77, 0.95) !important;
+    }
+    
+    .carousel-container {
+        backdrop-filter: none !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    /* Disable video backgrounds completely */
+    .hero-video,
+    .section-video {
+        display: none !important;
+    }
+    
+    /* Replace with static background colors */
+    .hero {
+        background: linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 100%) !important;
+    }
+    
+    .video-section {
+        background: linear-gradient(45deg, var(--color-secondary), #d4c29a) !important;
+        height: 20vh !important;
+    }
+    
+    .dgcs-section,
+    .our-solutions {
+        background: var(--color-bg-secondary) !important;
+    }
+    
+    /* Disable all hover effects */
+    .use-case-card:hover,
+    .solution-card:hover,
+    .journey-card:hover,
+    .logo-item:hover,
+    .cta-button:hover,
+    .submit-button:hover {
+        transform: none !important;
+        box-shadow: 0 5px 15px var(--color-shadow) !important;
+    }
+    
+    /* Simplify all box shadows */
+    .use-case-card,
+    .solution-card,
+    .journey-card,
+    .why-column,
+    .navbar {
+        box-shadow: 0 2px 8px var(--color-shadow) !important;
+    }
+    
+    /* Disable parallax completely */
+    .hero,
+    .hero-video {
+        transform: none !important;
+    }
+    
+    /* Disable carousel animation on mobile */
+    .carousel {
+        animation: none !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .logo-item {
+        scroll-snap-align: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* Remove all transitions during scroll */
+    * {
+        will-change: auto !important;
+    }
+    
+    /* Force GPU acceleration off for heavy elements */
+    body,
+    .hero,
+    .navbar {
+        will-change: auto !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* Responsive layout optimizations */
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1074,8 +1165,8 @@ h1, h2, h3, h4, h5, h6 {
         background-color: var(--color-bg-secondary);
         width: 100%;
         text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px var(--color-shadow);
+        transition: 0.2s ease !important;
+        box-shadow: 0 5px 15px var(--color-shadow);
         padding: 2rem 0;
     }
 
@@ -1119,14 +1210,11 @@ h1, h2, h3, h4, h5, h6 {
         margin: 0 1rem;
     }
 
-    .video-section {
-        height: 30vh;
-    }
-
     .use-cases-grid,
     .solutions-grid,
     .journey-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem !important;
     }
 
     .why-grid {
@@ -1157,25 +1245,41 @@ h1, h2, h3, h4, h5, h6 {
     .journey-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+    
+    /* Reduce star complexity on tablets too */
+    body::before,
+    body::after {
+        opacity: 0.3 !important;
+        animation-duration: 40s !important;
+    }
 }
 
 @media (max-width: 480px) {
+    /* Even more aggressive optimizations for smaller screens */
+    
+    /* Disable all animations completely */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    /* Minimal typography */
     .hero-title {
-        font-size: 2rem;
+        font-size: 2rem !important;
     }
 
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1rem !important;
     }
 
     .section-title {
-        font-size: 1.8rem;
+        font-size: 1.8rem !important;
     }
 
     .dgcs-title,
     .solutions-title,
     .solutions-subtitle {
-        font-size: 1.5rem;
+        font-size: 1.5rem !important;
     }
 
     .dgcs-content {
@@ -1189,17 +1293,18 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .video-section {
-        height: 25vh;
+        height: 15vh !important;
     }
 
     .use-case-card,
     .solution-card,
     .journey-card {
         padding: 1.5rem;
+        margin-bottom: 1rem;
     }
 
     .carousel {
-        gap: 1.5rem;
+        gap: 1rem !important;
     }
 
     .hero-content {
@@ -1207,8 +1312,17 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .logo-item img {
-        max-height: 50px;
-        max-width: 120px;
+        max-height: 40px !important;
+        max-width: 100px !important;
+    }
+    
+    /* Reduce padding everywhere to improve scroll performance */
+    .container {
+        padding: 0 15px !important;
+    }
+    
+    section {
+        padding: 3rem 0 !important;
     }
 }
 
@@ -1235,6 +1349,31 @@ h1, h2, h3, h4, h5, h6 {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+/* Additional mobile-specific performance rules */
+@media (max-width: 768px) {
+    /* Optimize scroll behavior */
+    html {
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable all CSS filters and effects */
+    * {
+        filter: none !important;
+        backdrop-filter: none !important;
+    }
+    
+    /* Force simple rendering */
+    img {
+        image-rendering: auto !important;
+    }
+    
+    /* Reduce complexity of gradients */
+    .cta-button,
+    .submit-button {
+        background: var(--color-secondary) !important;
     }
 }
 

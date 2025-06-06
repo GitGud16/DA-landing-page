@@ -31,8 +31,88 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Video Loading and Optimization
+// Enhanced Mobile Performance Detection and Optimizations
+function initMobileOptimizations() {
+    const isMobile = window.innerWidth <= 768;
+    const isSlowDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    const isSlowConnection = navigator.connection && 
+        (navigator.connection.effectiveType === 'slow-2g' || 
+         navigator.connection.effectiveType === '2g' || 
+         navigator.connection.effectiveType === '3g');
+    
+    if (isMobile || isSlowDevice || isSlowConnection) {
+        // Disable all heavy animations
+        document.body.classList.add('mobile-optimized');
+        
+        // Remove starry background completely
+        const style = document.createElement('style');
+        style.textContent = `
+            .mobile-optimized body::before,
+            .mobile-optimized body::after {
+                display: none !important;
+            }
+            
+            .mobile-optimized * {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+                will-change: auto !important;
+            }
+            
+            .mobile-optimized .carousel {
+                animation: none !important;
+            }
+            
+            .mobile-optimized .hero-video,
+            .mobile-optimized .section-video {
+                display: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Disable intersection observer animations
+        const animatedElements = document.querySelectorAll('.use-case-card, .solution-card, .journey-card, .why-column');
+        animatedElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
+        
+        // Disable parallax completely
+        window.removeEventListener('scroll', initParallaxEffect);
+        
+        // Replace videos with static backgrounds
+        const heroVideo = document.querySelector('.hero-video');
+        const sectionVideo = document.querySelector('.section-video');
+        
+        if (heroVideo) {
+            heroVideo.style.display = 'none';
+            document.querySelector('.hero').style.background = 
+                'linear-gradient(135deg, var(--color-tertiary) 0%, #1a252e 100%)';
+        }
+        
+        if (sectionVideo) {
+            sectionVideo.style.display = 'none';
+            document.querySelector('.video-section').style.background = 
+                'linear-gradient(45deg, var(--color-secondary), #d4c29a)';
+        }
+    }
+}
+
+// Optimized Video Loading for Mobile
 function initVideoOptimization() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Completely disable videos on mobile
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.style.display = 'none';
+            video.pause();
+            video.src = '';
+        });
+        return;
+    }
+    
     const videos = document.querySelectorAll('video');
     
     videos.forEach(video => {
@@ -79,24 +159,38 @@ function initVideoOptimization() {
     });
 }
 
-// Enhanced Parallax Effect with Video Support
+// Optimized Parallax Effect (disabled on mobile)
 function initParallaxEffect() {
+    if (window.innerWidth <= 768) return; // Skip on mobile
+    
     const hero = document.querySelector('.hero');
     const heroVideo = document.querySelector('.hero-video');
     
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+    
+    function updateParallax() {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.3;
+        const rate = scrolled * -0.2; // Reduced intensity
         
         if (hero) {
             hero.style.transform = `translateY(${rate}px)`;
         }
         
-        // Parallax effect for hero video
         if (heroVideo) {
-            heroVideo.style.transform = `translateY(${rate * 0.5}px)`;
+            heroVideo.style.transform = `translateY(${rate * 0.3}px)`;
         }
-    });
+        
+        ticking = false;
+    }
+    
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestTick, { passive: true });
 }
 
 // Mobile Navigation Toggle
@@ -225,8 +319,18 @@ function showFormMessage(message, type) {
     }, 5000);
 }
 
-// Intersection Observer for Animations
+// Optimized Scroll Animations (disabled on mobile)
 function initScrollAnimations() {
+    if (window.innerWidth <= 768) {
+        // Show all elements immediately on mobile
+        const animatedElements = document.querySelectorAll('.use-case-card, .solution-card, .journey-card, .why-column');
+        animatedElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
+        return;
+    }
+    
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -383,6 +487,7 @@ function initPageVisibility() {
 
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    initMobileOptimizations(); // Run this first
     initThemeToggle();
     initVideoOptimization();
     initMobileNavigation();
@@ -398,15 +503,21 @@ document.addEventListener('DOMContentLoaded', () => {
     initPageVisibility();
 });
 
-// Prevent animations during window resize
+// Optimized resize handler
 let resizeTimer;
 window.addEventListener('resize', () => {
     document.body.classList.add('resize-animation-stopper');
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
         document.body.classList.remove('resize-animation-stopper');
-    }, 400);
-});
+        
+        // Re-run mobile optimizations if screen size changed
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile && !document.body.classList.contains('mobile-optimized')) {
+            initMobileOptimizations();
+        }
+    }, 200); // Reduced from 400ms
+}, { passive: true });
 
 // Add resize animation stopper styles
 const resizeStyle = document.createElement('style');
