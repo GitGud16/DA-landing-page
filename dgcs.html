@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGCS - Dunesaero Ground Control Station</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/dgcs.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/logos/dunes-aero-logo.avif" alt="Dunes Aero" class="logo-image">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#solutions">Solutions</a></li>
+                <li><a href="dgcs.html" class="active">DGCS</a></li>
+                <li><a href="career.html">Career</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- DGCS Hero Section -->
+    <section class="dgcs-hero">
+        <div class="dgcs-hero-bg">
+            <img src="assets/images/DGCS-page.jpg" alt="DGCS Background" class="dgcs-hero-image">
+        </div>
+        <div class="dgcs-hero-overlay"></div>
+        <div class="dgcs-hero-content">
+            <h1 class="dgcs-hero-title">Dunesaero Ground<br>Control Station</h1>
+        </div>
+    </section>
+
+    <!-- DGCS Preview Section -->
+    <section class="dgcs-preview-section">
+        <div class="container">
+            <div class="dgcs-preview-container">
+                <img src="assets/images/DGCS-preview.avif" alt="DGCS Preview" class="dgcs-preview-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- DGCS Features Section -->
+    <section class="dgcs-features-section">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <p class="section-subtitle">Discover the powerful capabilities of our Ground Control Station</p>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-feature="drones">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-helicopter"></i>
+                        </div>
+                        <h3>Connect to Multiple Drones Simultaneously</h3>
+                        <p>Manage and control multiple drone operations from a single interface</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="assets/images/carousel1.avif" alt="Multiple Drones" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="feature-card" data-feature="missions">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-save"></i>
+                        </div>
+                        <h3>Save and Upload Missions</h3>
+                        <p>Save and upload a saved mission at anytime with easy mission management</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="assets/images/carousel2.avif" alt="Mission Planning" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="feature-card" data-feature="simulator">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Built In Simulator</h3>
+                        <p>Practice and test your missions safely with our integrated flight simulator</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="assets/images/carousel3.jpeg" alt="Flight Simulator" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="feature-card" data-feature="camera">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Live Camera Stream</h3>
+                        <p>Real-time video streaming from your drone's camera with crystal clear quality</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="assets/images/DGCS-background.avif" alt="Live Camera Stream" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="feature-card" data-feature="support">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>ArduPilot and PX4 Support</h3>
+                        <p>Full compatibility with ArduPilot and PX4 flight control systems</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="assets/images/our-solutions-background.avif" alt="ArduPilot PX4 Support" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="feature-card" data-feature="drones-types">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h3>All Drone Types Support</h3>
+                        <p>Support for all types of drones including VTOL and multirotors</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="assets/images/join-the-team.webp" alt="All Drone Types" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="feature-card" data-feature="language">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3>English and Arabic Support</h3>
+                        <p>Supports both English and Arabic languages for better accessibility</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="assets/images/carousel1.avif" alt="Language Support" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DGCS Pricing Section -->
+    <section class="dgcs-pricing-section">
+        <div class="container">
+            <div class="pricing-header">
+                <h2 class="section-title">DGCS Pricing</h2>
+                <p class="section-subtitle">Dunesaero Ground Control Station</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- PRO Plan -->
+                <div class="pricing-card pro-plan">
+                    <div class="pricing-header-card">
+                        <h3>PRO</h3>
+                        <div class="price">
+                            <span class="amount">200</span>
+                            <span class="currency">SAR</span>
+                            <span class="period">per month</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Switch between English and Arabic language</li>
+                            <li><i class="fas fa-check"></i> Connect to multiple drones simultaneously</li>
+                            <li><i class="fas fa-check"></i> Save and upload a saved mission at anytime</li>
+                            <li><i class="fas fa-check"></i> Live camera stream</li>
+                            <li><i class="fas fa-check"></i> ArduPilot and PX4 support</li>
+                            <li><i class="fas fa-check"></i> Support for all types of drones including VTOL and multirotors</li>
+                            <li><i class="fas fa-check"></i> Offline flights and planning</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-actions">
+                        <a href="#" class="demo-link">BOOK a demo</a>
+                        <button class="pricing-button primary">Buy Now!</button>
+                    </div>
+                </div>
+
+                <!-- MILITARY Plan -->
+                <div class="pricing-card military-plan">
+                    <div class="pricing-header-card">
+                        <h3>MILITARY</h3>
+                        <div class="price">
+                            <span class="amount">Exclusive</span>
+                            <span class="currency">Pricing</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <p class="features-intro">Everything in the Pro plan, Plus</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Full on premise system</li>
+                            <li><i class="fas fa-check"></i> Satellite offline maps</li>
+                            <li><i class="fas fa-check"></i> On-site delivery and support</li>
+                            <li><i class="fas fa-check"></i> Enhanced cybersecurity</li>
+                            <li><i class="fas fa-check"></i> Computer vision AI support (optional)</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-actions">
+                        <button class="pricing-button secondary">Contact Us!</button>
+                    </div>
+                </div>
+
+                <!-- MANUFACTURERS Plan -->
+                <div class="pricing-card manufacturers-plan">
+                    <div class="pricing-header-card">
+                        <h3>Manufacturers</h3>
+                        <div class="price">
+                            <span class="amount">Exclusive</span>
+                            <span class="currency">Pricing</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <p class="features-intro">Everything in the Pro plan, Plus</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Visual customization with the logo and visual identity</li>
+                            <li><i class="fas fa-check"></i> Priority to requested features in updates</li>
+                            <li><i class="fas fa-check"></i> Direct support channel with our team</li>
+                            <li><i class="fas fa-check"></i> Computer vision AI support (optional)</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-actions">
+                        <button class="pricing-button secondary">Contact Us!</button>
+                    </div>
+                </div>
+
+                <!-- ENTERPRISE Plan -->
+                <div class="pricing-card enterprise-plan">
+                    <div class="pricing-header-card">
+                        <h3>Enterprise - Soon</h3>
+                        <div class="price">
+                            <span class="amount">Exclusive</span>
+                            <span class="currency">Pricing</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <p class="features-intro">Everything in the Pro plan, Plus</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Import custom maps</li>
+                            <li><i class="fas fa-check"></i> 3D maps</li>
+                            <li><i class="fas fa-check"></i> Vertical flight planning</li>
+                            <li><i class="fas fa-check"></i> Mapping grid planning</li>
+                            <li><i class="fas fa-check"></i> Photogrammetry tool</li>
+                            <li><i class="fas fa-check"></i> Auto Terrain following and avoidance</li>
+                            <li><i class="fas fa-check"></i> Scheduled flights</li>
+                            <li><i class="fas fa-check"></i> Save and share the flight plans with the rest of the team</li>
+                            <li><i class="fas fa-check"></i> AI auto mission planning</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-actions">
+                        <button class="pricing-button disabled" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported By Section -->
+    <section class="supported-by">
+        <div class="container">
+            <h2 class="section-title">Supported By</h2>
+            <div class="carousel-container">
+                <div class="carousel" id="supportCarousel">
+                    <div class="logo-item">
+                        <img src="assets/logos/mocait-logo.avif" alt="MOCAIT - Ministry of Communications and Information Technology">
+                    </div>
+                    <div class="logo-item">
+                        <img src="assets/logos/kacst-logo.avif" alt="KACST - King Abdulaziz City for Science and Technology">
+                    </div>
+                    <div class="logo-item">
+                        <img src="assets/logos/ntdp-logo.avif" alt="NTDP - National Technology Development Program">
+                    </div>
+                    <div class="logo-item">
+                        <img src="assets/logos/GACA-logo.avif" alt="GACA - General Authority of Civil Aviation">
+                    </div>
+                    <!-- Duplicates for seamless loop -->
+                    <div class="logo-item">
+                        <img src="assets/logos/mocait-logo.avif" alt="MOCAIT - Ministry of Communications and Information Technology">
+                    </div>
+                    <div class="logo-item">
+                        <img src="assets/logos/kacst-logo.avif" alt="KACST - King Abdulaziz City for Science and Technology">
+                    </div>
+                    <div class="logo-item">
+                        <img src="assets/logos/ntdp-logo.avif" alt="NTDP - National Technology Development Program">
+                    </div>
+                    <div class="logo-item">
+                        <img src="assets/logos/GACA-logo.avif" alt="GACA - General Authority of Civil Aviation">
+                    </div>
+                    <!-- Additional duplicates for perfect seamless transition -->
+                    <div class="logo-item">
+                        <img src="assets/logos/mocait-logo.avif" alt="MOCAIT - Ministry of Communications and Information Technology">
+                    </div>
+                    <div class="logo-item">
+                        <img src="assets/logos/kacst-logo.avif" alt="KACST - King Abdulaziz City for Science and Technology">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="contact-us">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Get in touch with our team</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contact@dunesaero.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+966 54 556 3050</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Habib Ibn Zayd, Al Fayha'a, Jeddah 22246</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Office Hours</h4>
+                            <p>We Are Available From Saturday - Thursday 9:00 am - 5:00 pm</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-area">
+                    <h3>Send us a Message</h3>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="company" placeholder="Company Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="phone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Dunes Aero</h3>
+                    <p>Leading the future of drone technology and aerospace innovation in Saudi Arabia and beyond.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.html#solutions">Solutions</a></li>
+                            <li><a href="dgcs.html">DGCS</a></li>
+                            <li><a href="career.html">Career</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:contact@dunesaero.com">contact@dunesaero.com</a></li>
+                            <li><a href="tel:+966545563050">+966 54 556 3050</a></li>
+                            <li><a href="#">Jeddah, Saudi Arabia</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Follow Us</h4>
+                        <ul>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Dunes Aero. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/dgcs.js"></script>
+</body>
+</html> 
